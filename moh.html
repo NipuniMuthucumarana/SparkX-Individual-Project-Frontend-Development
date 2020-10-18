@@ -200,7 +200,7 @@
             <script type="text/javascript">
                         
                     
-                   $(document).ready(function(){
+                   //$(document).ready(function(){
                         $('#hos').submit(function(event){
                             event.preventDefault();
 
@@ -215,15 +215,15 @@
                            
                             //var hospitalid = $form.find('input[name="patientid"]').val();
                             //http://localhost:8081/hospitalRegister/"+patientid
-                            var url = 'http://localhost:8081/hospitalRegister';
+                            var url = 'http://localhost:8081/hospitalRegister?id='+id+'&name='+name+'&district='+district+'&locationX='+locationX+'&locationY='+locationY;
                             //var patientid=$('#patientid').val();
                             //var hospitalid=$('#hospitalid').val();
                             $.ajax({
-                                type: 'post',
+                                type: 'POST',
                                 url: url,   // this is my servlet
                                 contentType: 'application/json',
-                                //data : JSON.stringify({id: id, name: name, district: district, locationX: locationX, locationY: locationY}),
-                                success : function(data, status, xhr){
+                                data : JSON.stringify({id: id, hosname: name, hosdistrict: district, hoslocationX: locationX, hoslocationY: locationY}),
+                                success : function(data, status){
                                    window.location.replace("moh.html");
                                 },
                                 /*success: function (data, textStatus, jqXHR) {
@@ -237,7 +237,7 @@
                                 }*/
                             });                                
                         });
-                      });
+                      //});
                     
                 </script>        
           
