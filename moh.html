@@ -25,6 +25,13 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </head>
   <body>
     
@@ -168,33 +175,75 @@
         </div>
         <div class="row block-9">
           <div class="col-md-6 pr-md-5">
-            <form action="#">
+            <form id="hos" name="moh-hospital" method="post" action="http://localhost:8081/hospitalRegister">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Hospital Id">
+                <input type="text" class="form-control" name="id" id="id" placeholder="Hospital Id">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Hospital Name">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Hospital Name">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="District">
+                <input type="text" class="form-control" name="district" id="district" placeholder="District">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="X coordinate">
+                <input type="text" class="form-control" name="locationX" id="locationX" placeholder="X coordinate">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Y coordinate">
+                <input type="text" class="form-control" name="locationY" id="locationY" placeholder="Y coordinate">
               </div>
+              
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Build Date">
-              </div>
-              <div class="form-group">
-                <input type="submit" value="Send Details" class="btn btn-primary py-3 px-5">
+                <input id="hosp" type="submit" value="Send Details" class="btn btn-primary py-3 px-5">
               </div>
             </form>
+
+            <script type="text/javascript">
+                        
+                    
+                   $(document).ready(function(){
+                        $('#hosp').submit(function(event){
+                            event.preventDefault();
+
+
+                            var $form = $(this);
+                            var id=$('#id').val();
+                            var name=$('#name').val();
+                            var district=$('#district').val();
+                            var locationX=$('#locationX').val();
+                            var locationY=$('#locationY').val();
+                          console.log(district);
+                           
+                            //var hospitalid = $form.find('input[name="patientid"]').val();
+                            //http://localhost:8081/hospitalRegister/"+patientid
+                            var url = 'http://localhost:8081/hospitalRegister';
+                            //var patientid=$('#patientid').val();
+                            //var hospitalid=$('#hospitalid').val();
+                            $.ajax({
+                                type: 'GET',
+                                url: url,   // this is my servlet
+                                contentType: 'application/json',
+                                data : JSON.stringify({id: id, name: name, district: district, locationX: locationX, locationY: locationY}),
+                                success : function(data, status, xhr){
+                                   window.location.replace("moh.html");
+                                },
+                                /*success: function (data, textStatus, jqXHR) {
+                              
+                                  if(data.success){
+                                    alert("hi");
+                                    //$(location).attr('href',"moh.html");
+                                  }else{
+                                      alert('Fail....');
+                                  }
+                                }*/
+                            });                                
+                        });
+                      });
+                    
+                </script>        
           
           </div>
 
-          <div class="col-md-6" id="map"></div>
+          <!--<div class="col-md-6" id="map"></div>-->
         </div>
       </div>
     </section>
