@@ -46,6 +46,7 @@
           <li class="nav-item active"><a href="index.html" class="nav-link">Director</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
           <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link">Log out</a></li>
         </ul>
       </div>
     </div>
@@ -94,12 +95,12 @@
     							</div>
     							<h2>Update Hospital Statistics</h2>
     						</a>
-    						<a href="#section-counter" class="services-wrap ftco-animate">
+    						<a href="#section-admit" class="services-wrap ftco-animate">
     							<div class="icon d-flex justify-content-center align-items-center">
     								<span class="ion-ios-arrow-back"></span>
     								<span class="ion-ios-arrow-forward"></span>
     							</div>
-    							<h2>View Patient Details</h2>
+    							<h2>Admit Patients</h2>
     						</a>
     						<a href="#section-discharge" class="services-wrap ftco-animate">
     							<div class="icon d-flex justify-content-center align-items-center">
@@ -115,53 +116,72 @@
     	</div>
     </section>
 
-    <section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(images/bg_4.jpg);">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-            <h2 class="mb-4">Statistics</h2>
-            <span class="subheading">We care you Always</span>
+    <section class="ftco-counter img ftco-degree-bg" id="section-counter" style="background-image: url(images/image3.jpg);">
+      <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+          <div class="col-md-12 mb-4">
+            <h2 class="h4" id="section-admit">Admit Patient</h2>
           </div>
         </div>
-    		<div class="row justify-content-center">
-    			<div class="col-md-10">
-		    		<div class="row">
-		          <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-		            <div class="block-18 text-center">
-		              <div class="text">
-		                <strong class="number" data-number="8">0</strong>
-		                <span>Hospital</span>
-		              </div>
-		            </div>
-		          </div>
-		          <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-		            <div class="block-18 text-center">
-		              <div class="text">
-		                <strong class="number" data-number="15">0</strong>
-		                <span>District</span>
-		              </div>
-		            </div>
-		          </div>
-		          <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-		            <div class="block-18 text-center">
-		              <div class="text">
-		                <strong class="number" data-number="64">0</strong>
-		                <span>Country</span>
-		              </div>
-		            </div>
-		          </div>
-		          <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-		            <div class="block-18 text-center">
-		              <div class="text">
-		                <strong class="number" data-number="997">0</strong>
-		                <span>Overall</span>
-		              </div>
-		            </div>
-		          </div>
-		        </div>
-	        </div>
+        <div class="row block-9">
+          <div class="col-md-6 pr-md-5">
+            <form id="admit" name="admit" method="get">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Doctor Id" id="doctor_id" name="doctor_id">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Patient Id" id="patient_id" name="patient_id">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Severity Level" id="severity_level" name="severity_level">
+              </div>
+              <div class="form-group">
+                <input id="submit2" type="submit" value="Admit Patient" class="btn btn-primary">               
+              </div>
+              
+            </form>  
+
+            <script>
+                        
+                        
+                        $('#admit').submit(function(event){
+                            event.preventDefault();
+
+
+                            var $form = $(this);
+                            var doctor_id=$('#doctor_id').val();
+                            var patient_id=$('#patient_id').val();
+                            var severity_level=$('#severity_level').val();
+                            console.log(severity_level);
+                            //var hospitalid = $form.find('input[name="patientid"]').val();
+                            //http://localhost:8081/hospitalRegister/"+patientid
+                            var url = 'http://localhost:8081/doctorRegister?doctor_id='+doctor_id+"&patient_id="+patient_id+"&severity_level="+severity_level;
+                            //var patientid=$('#patientid').val();
+                            //var hospitalid=$('#hospitalid').val();
+                            $.ajax({
+                                type: 'GET',
+                                url: url,   // this is my servlet
+                                contentType: 'application/json',
+                                //data : JSON.stringify({doctor_id: doctor_id, patient_id: patient_id, severity_level: severity_level}),
+                                success : function(data, status, xhr){
+                                   window.location.replace("director.html");
+                                },
+                                /*success: function (data, textStatus, jqXHR) {
+                              
+                                  if(data.success){
+                                    alert("hi");
+                                    //$(location).attr('href',"moh.html");
+                                  }else{
+                                      alert('Fail....');
+                                  }
+                                }*/
+                            });                                
+                        });
+                    
+                </script>        
+          </div>
         </div>
-    	</div>
+      </div>
     </section>
 
     <section class="ftco-counter img ftco-degree-bg" id="section-counter" style="background-image: url(images/image3.jpg);">
@@ -181,7 +201,7 @@
                 <input type="text" class="form-control" placeholder="Hospital Id" id="hospitalid" name="hospital_id">
               </div>
               <div class="form-group">
-                <input id="submit1" type="submit" value="Discharge" class="btn btn-primary">
+                <input id="submit1" type="submit" value="Discharge Patient" class="btn btn-primary">
                 
               </div>
               
@@ -189,11 +209,7 @@
 
             <script>
                         
-                        function add_cors_header() {
-                            header("Access-Control-Allow-Origin: http://localhost:8081/hospitalRegister");
-                            header("Access-Control-Allow-Headers", "X-Requested-With, content-type");
-                        }
-                   
+                        
                         $('#director').submit(function(event){
                             event.preventDefault();
 
